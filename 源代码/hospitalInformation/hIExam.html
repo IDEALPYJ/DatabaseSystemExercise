@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>医院信息</title>
+    <link rel="shortcut icon" href="../public/logo.jpg" />
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /*主体背景*/
+        body{
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+        }
+    </style>
+    <script>
+        function printUser(){
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function() {
+                if (this.readyState===4 && this.status===200) {
+                    document.getElementById("user").innerHTML=this.responseText;
+                }
+            }
+            xmlhttp.open("GET","../public/printUserName.php",true);
+            xmlhttp.send();
+        }
+
+        function sendInput(str1,str2) {
+            if (str1==="") {
+                document.getElementById("txtHint").innerHTML="";
+                return;
+            }
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function() {
+                if (this.readyState===4 && this.status===200) {
+                    document.getElementById("showResult").innerHTML=this.responseText;
+                }
+            }
+            xmlhttp.open("GET","hIExamSelect.php?mode="+str1+"&text="+str2,true);
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body onpageshow="printUser()">
+<nav class="shadow py-2 bg-light border-bottom">
+    <div class="container d-flex flex-wrap">
+        <ul class="nav me-auto">
+            <li><h2>住院管理系统</h2></li>
+        </ul>
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="../patientInformation/pIMain.html" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-badge" viewBox="0 0 16 16"><path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"/></svg> 病人信息</a></li>
+            <li class="nav-item"><a href="../registration/registration.html" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/><path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/></svg> 住院办理</a></li>
+            <li class="nav-item"><a href="../discharge/discharge.html" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/><path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/></svg> 出院办理</a></li>
+            <li class="nav-item"><a href="../patientManagement/pMDepartment.html" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16"><path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/><path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/></svg> 病人事务</a></li>
+            <li class="nav-item"><a href="hIDepartment.html" class="nav-link active" aria-current="page"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z"/><path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z"/></svg> 医院信息</a></li>
+            <li class="nav-item"><a id="user" class="nav-link"></a></li>
+        </ul>
+    </div>
+</nav>
+<br>
+<div id="tabCard" class="shadow-sm card w-75" style="margin: 20px auto; padding: 20px">
+    <nav class="py-2 bg-light border-bottom">
+        <div class="container d-flex flex-wrap">
+            <ul class="nav me-auto">
+                <li><h4>查找项目</h4></li>
+            </ul>
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a href="hIDepartment.html" class="nav-link">科室</a></li>
+                <li class="nav-item"><a href="hIDoctor.html" class="nav-link">医生</a></li>
+                <li class="nav-item"><a href="hINurse.html" class="nav-link">护士</a></li>
+                <li class="nav-item"><a href="hIMedicine.html" class="nav-link">药品</a></li>
+                <li class="nav-item"><a href="hIExam.html" class="nav-link active" aria-current="page">检查项目</a></li>
+                <li class="nav-item"><a href="hISickbed.html" class="nav-link">病床</a></li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <div id="mainInput" class="mainInput">
+        <form class="needs-validation" novalidate>
+            <div class="row g-3">
+                <div class="col-4">
+                    <label for="chooseMode" class="form-label">查询方式</label>
+                    <select class="form-select" id="chooseMode" required>
+                        <option value ="byID">按照ID</option>
+                        <option value ="byName">按照名称</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label for="inputText" class="form-label">查询内容</label>
+                    <div class="input-group has-validation">
+                        <input type="text" class="form-control" id="inputText">
+                    </div>
+                </div>
+                <div class="col-2" style="margin-top: 47px">
+                    <label for="inputBottom"></label>
+                    <input id="inputBottom" class="btn btn-primary" type="button" value="查询" onclick="sendInput(document.getElementById('chooseMode').value,document.getElementById('inputText').value)">
+                </div>
+            </div>
+        </form>
+        <br>
+        <div id="showResult" class="showResult"><b></b></div>
+    </div>
+</div>
+<br>
+</body>
+
+</html>

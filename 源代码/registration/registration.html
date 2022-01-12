@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>住院办理</title>
+    <link rel="shortcut icon" href="../public/logo.jpg" />
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <script>
+        function printUser(){
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function() {
+                if (this.readyState===4 && this.status===200) {
+                    document.getElementById("user").innerHTML=this.responseText;
+                }
+            }
+            xmlhttp.open("GET","../public/printUserName.php",true);
+            xmlhttp.send();
+        }
+
+        function checkPatientID(){
+            var patientID=document.getElementById('ID');
+            var PIndex=patientID.value.indexOf('P');
+            var IDLength=patientID.value.length;
+            var write=document.getElementById("IDFeedback");
+            if(patientID.value === ""){
+                patientID.classList.add("is-invalid");
+                write.innerHTML="必须输入病人ID";
+                return false;
+            }
+            if(PIndex!==1&&IDLength!==6){
+                patientID.classList.add("is-invalid");
+                write.innerHTML="错误病人ID格式";
+                return false;
+            }
+            patientID.classList.remove("is-invalid");
+        }
+
+        function checkPatientName(){
+            var patientName=document.getElementById('name');
+            var write=document.getElementById("nameFeedback");
+            if(patientName.value===null||patientName.value===""){
+                patientName.classList.add("is-invalid");
+                write.innerHTML="必须输入病人姓名";
+                return false;
+            }
+            patientName.classList.remove("is-invalid");
+        }
+
+        function checkPatientIDNumber(){
+            var patientIDNumber=document.getElementById('IDNumber');
+            var write=document.getElementById("IDNumberFeedback");
+            if(patientIDNumber.value===null||patientIDNumber.value===""){
+                patientIDNumber.classList.add("is-invalid");
+                write.innerHTML="必须输入病人身份证号码";
+                return false;
+            }
+            patientIDNumber.classList.remove("is-invalid");
+        }
+
+        function sendPatientInfo(str1,str2,str3,str4,str5,str6,str7) {
+            if (str1==="") {
+                return;
+            }
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function() {
+                if (this.readyState===4 && this.status===200) {
+                    document.getElementById("showResult").innerHTML=this.responseText;
+                }
+            }
+            xmlhttp.open("GET","insertPatient.php?ID="+str1+"&name="+str2+"&sex="+str3+"&age="+str4+"&IDNumber="+str5+"&deptID="+str6+"&prePay="+str7,true);
+            xmlhttp.send();
+        }
+
+        function getDoctorTable(str1){
+            if (str1==="") {
+                return;
+            }
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function() {
+                if (this.readyState===4 && this.status===200) {
+                    document.getElementById("showDoctorTable").innerHTML=this.responseText;
+                }
+            }
+            xmlhttp.open("GET","showDoctorTable.php?deptID="+str1,true);
+            xmlhttp.send();
+        }
+
+        function getSickbedTable(str1){
+            if (str1==="") {
+                return;
+            }
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function() {
+                if (this.readyState===4 && this.status===200) {
+                    document.getElementById("showSickbedTable").innerHTML=this.responseText;
+                }
+            }
+            xmlhttp.open("GET","showSickbedTable.php?deptID="+str1,true);
+            xmlhttp.send();
+        }
+
+        function sendDoctorID(str1) {
+            if (str1==="") {
+                return;
+            }
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function() {
+                if (this.readyState===4 && this.status===200) {
+                    document.getElementById("showDoctorTitle").innerHTML=this.responseText;
+                }
+            }
+            xmlhttp.open("GET","getDoctorID.php?ID="+str1,true);
+            xmlhttp.send();
+        }
+
+        function sendSickbedID(str1) {
+            if (str1==="") {
+                return;
+            }
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange=function() {
+                if (this.readyState===4 && this.status===200) {
+                    document.getElementById("showSickbedTitle").innerHTML=this.responseText;
+                }
+            }
+            xmlhttp.open("GET","getSickbedID.php?ID="+str1,true);
+            xmlhttp.send();
+        }
+
+        function reloadThis () {
+            if(checkPatientID()===false||checkPatientName()===false){
+                return;
+            }
+            // location.reload();
+        }
+    </script>
+
+    <style>
+        /*主体背景*/
+        body{
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+        }
+    </style>
+</head>
+
+<body onpageshow="printUser()">
+
+<nav class="shadow py-2 bg-light border-bottom">
+    <div class="container d-flex flex-wrap">
+        <ul class="nav me-auto">
+            <li><h2>住院管理系统</h2></li>
+        </ul>
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="../patientInformation/pIMain.html" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-badge" viewBox="0 0 16 16"><path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"/></svg> 病人信息</a></li>
+            <li class="nav-item"><a href="registration.html" class="nav-link active" aria-current="page"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/><path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/></svg> 住院办理</a></li>
+            <li class="nav-item"><a href="../discharge/discharge.html" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/><path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/></svg> 出院办理</a></li>
+            <li class="nav-item"><a href="../patientManagement/pMDepartment.html" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16"><path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/><path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/></svg> 病人事务</a></li>
+            <li class="nav-item"><a href="../hospitalInformation/hIDepartment.html" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z"/><path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z"/></svg> 医院信息</a></li>
+            <li class="nav-item"><a id="user" class="nav-link"></a></li>
+        </ul>
+    </div>
+</nav>
+
+<br>
+
+<div class="shadow-sm card col-md-5 col-lg-6" style="margin: 20px auto; padding: 20px">
+    <h3 class="mb-3">登记病人</h3>
+    <br>
+
+    <form class="needs-validation" novalidate>
+        <div class="row g-3">
+            <div class="col-12">
+                <label for="ID" class="form-label">病人ID</label>
+                <div class="input-group has-validation">
+                    <input type="text" class="form-control w-75" id="ID" required onfocusout="checkPatientID()">
+                    <div id="IDFeedback" class="invalid-feedback">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label for="name" class="form-label">病人姓名</label>
+                <div class="input-group has-validation">
+                    <input type="text" class="form-control w-75" id="name" required onfocusout="checkPatientName()">
+                    <div id="nameFeedback" class="invalid-feedback">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label for="sex" class="form-label">性别</label>
+                <select class="form-select" id="sex">
+                    <option value ="男">男</option>
+                    <option value ="女">女</option>
+                </select>
+            </div>
+
+            <div class="col-12">
+                <label for="age" class="form-label">病人年龄</label>
+                <div class="input-group has-validation">
+                    <input type="text" class="form-control w-75" id="age" min="1" max="3">
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label for="IDNumber" class="form-label">病人身份证号码</label>
+                <div class="input-group has-validation">
+                    <input type="text" class="form-control w-75" id="IDNumber" required min="18" max="18" onfocusout="checkPatientIDNumber()">
+                    <div id="IDNumberFeedback" class="invalid-feedback"></div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label for="deptID" class="form-label">住院科室</label>
+                <select class="form-select" id="deptID" onchange="getDoctorTable(document.getElementById('deptID').value);getSickbedTable(document.getElementById('deptID').value)">
+                    <option value ="">暂无科室</option>
+                    <option value ="DEPT001">DEPT001 内科</option>
+                    <option value ="DEPT002">DEPT002 外科</option>
+                    <option value ="DEPT003">DEPT003 儿科</option>
+                    <option value ="DEPT004">DEPT004 妇科</option>
+                    <option value ="DEPT005">DEPT005 神经科</option>
+                    <option value ="DEPT006">DEPT006 眼科</option>
+                </select>
+            </div>
+            <h5>科室医生 <small id="showDoctorTitle" class="text-muted"></small></h5>
+            <div id="showDoctorTable"></div>
+            <h5>科室病床 <small id="showSickbedTitle" class="text-muted"></small></h5>
+            <div id="showSickbedTable"></div>
+
+            <div class="col-12">
+                <label for="prePay" class="form-label">病人预交金额</label>
+                <div class="input-group has-validation">
+                    <input type="text" class="form-control w-75" id="prePay">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="text-center">
+            <button class="w-25 btn btn-primary btn-lg" type="button" onclick="checkPatientID();checkPatientName();checkPatientIDNumber();sendPatientInfo(document.getElementById('ID').value,document.getElementById('name').value,document.getElementById('sex').value,document.getElementById('age').value,document.getElementById('IDNumber').value,document.getElementById('deptID').value,document.getElementById('prePay').value);reloadThis()">登记</button>
+        </div>
+        <br>
+        <div id="showResult"></div>
+    </form>
+</div>
+
+</body>
+
+</html>
